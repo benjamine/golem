@@ -1,0 +1,117 @@
+#!/bin/sh
+
+command=$1
+shift
+current_dir=$(pwd)
+
+if [ "$command" == "help" ] || [ "$command" == "" ];
+then
+    echo "usage: golem <command> [<args>]
+
+commands are:
+    do      exec command on vm (synced folder to cwd)
+    run     exec command on vm in golem root folder
+    up      raise the golem
+    halt    halt the golem
+    suspend suspend the golem
+    reload  reload the golem
+    destroy destroy the golem
+    clean   clear all synced folders
+    status  display golem status
+    where   display golem location"
+    exit
+fi
+
+script_dir=$(echo ${BASH_SOURCE[0]} | sed -r "s/^(.*)[\\/]golem$/\\1/")
+if ! [ $(pwd) == $script_dir ];
+then
+    cd "$script_dir"
+fi
+
+if [ "$command" == "where" ];
+then
+    echo "$script_dir"
+    exit $?
+fi
+
+if [ "$command" == "up" ] || [ "$command" == "summon" ];
+then
+    echo "Summoning the Golem!"
+    vagrant up
+    if [ $? == 0 ];
+    then
+        vagrant ssh -c "cat /vagrant/resources/banner.erb"
+    fi
+    exit $?
+fi
+
+if [ "$command" == "halt" ];
+then
+    vagrant halt
+    exit $?
+fi
+
+if [ "$command" == "suspend" ];
+then
+    vagrant suspend
+    exit $?
+fi
+
+if [ "$command" == "reload" ];
+then
+    vagrant reload
+    exit $?
+fi
+
+if [ "$command" == "destroy" ] || [ "$command" == "die" ];
+then
+    vagrant destroy
+    exit $?
+fi
+
+if [ "$command" == "clean" ];
+then
+    if [ -e "./synced_folders" ];
+    then
+        echo "removing all synced folders"
+        echo "(they get created automatically when using 'golem do')"
+        rm ./synced_folders
+        vagrant reload
+    else
+        echo "no synced folders found, done."
+    fi
+    exit $?
+fi
+
+if [ "$command" == "status" ];
+then
+    vagrant status
+    exit $?
+fi
+
+if [ "$command" == "do" ];
+then
+    vagrant ssh -c "cd /vagrant && $*"
+    exit $?
+fi
+
+if [ "$command" == "here" ];
+then
+    guest_dir='/vagrant'
+    synced_folder=$(grep -x "^ $current_dir => .*$" ./synced_folders)
+    if ! [ -n "$synced_folder" ];
+    then
+        guest_dir="/host_folders/${current_dir//[\/:\\]/_}"
+        echo "syncing $current_dir as $guest_dir..."
+        echo " $current_dir => $guest_dir" >> ./synced_folders
+        # reload to make vagrant created the new folder
+        vagrant reload
+    else
+        guest_dir=$(echo "$synced_folder" | sed -r "s/^ .* => (.*)$/\\1/")
+    fi
+
+    vagrant ssh -c "cd $guest_dir && $*"
+    exit $?
+fi
+
+echo "'$command' is not a golem command. See 'golem help'"
