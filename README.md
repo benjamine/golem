@@ -4,7 +4,7 @@ Golem
 automatically provisioned virtual machine for headless web automation.
 
 - ready for headless web automation using real Firefox and Chrome (using [Xfvb](http://en.wikipedia.org/wiki/Xvfb))
-- provisioned with web automation tools for ruby or node.js
+- provisioned with ruby stack (ruby, gem, bundler, cucumber, rake)
 - powered by [Vagrant](http://www.vagrantup.com/), [Puppet](https://puppetlabs.com/), [VirtualBox](http://www.virtualbox.org/) and [Ubuntu](http://www.ubuntu.com/) 12.
 
 Requirements
