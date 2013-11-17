@@ -10,3 +10,7 @@ Feature: Project Github Page
     And I see Requirements
     And I see Usage
 
+  Scenario: Find Golem license
+    Given I visit Golem github page
+    When I click on LICENSE
+    Then I see MIT license

@@ -14,3 +14,13 @@ end
 Then(/^I see Usage$/) do
   page.has_content?('Usage')
 end
+
+When(/^I click on LICENSE$/) do
+  click_link 'LICENSE'
+end
+
+Then(/^I see MIT license$/) do
+  page.has_content? 'MIT license'
+  page.has_content? 'Permission is hereby granted, free of charge, to any person '
+end
+

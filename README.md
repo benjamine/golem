@@ -38,4 +38,7 @@ golem do sudo bundle install && cucumber
 # now using chrome
 golem do BROWSER=chrome cucumber
 
+# or open an ssh session in the synced folder
+golem do
+
 ```

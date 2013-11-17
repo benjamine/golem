@@ -18,14 +18,16 @@ commands are:
     destroy destroy the golem
     clean   clear all synced folders
     status  display golem status
+    ssh     ssh into golem machine
     where   display golem location"
     exit
 fi
 
 script_dir=$(echo ${BASH_SOURCE[0]} | sed -r "s/^(.*)[\\/]golem$/\\1/")
-if ! [ $(pwd) == $script_dir ];
-then
-    cd "$script_dir"
+
+cd "$script_dir"
+if [ $(pwd) == $current_dir ]; then
+    at_golem_dir=true
 fi
 
 if [ "$command" == "where" ];
@@ -89,6 +91,12 @@ then
     exit $?
 fi
 
+if [ "$command" == "ssh" ];
+then
+    vagrant ssh
+    exit $?
+fi
+
 if [ "$command" == "run" ];
 then
     vagrant ssh -c "cd /vagrant && $*"
@@ -98,19 +106,27 @@ fi
 if [ "$command" == "do" ];
 then
     guest_dir='/vagrant'
-    synced_folder=$(grep -x "^ $current_dir => .*$" ./synced_folders)
-    if ! [ -n "$synced_folder" ];
-    then
-        guest_dir="/host_folders/${current_dir//[\/:\\]/_}"
-        echo "syncing $current_dir as $guest_dir..."
-        echo " $current_dir => $guest_dir" >> ./synced_folders
-        # reload to make vagrant created the new folder
-        vagrant reload
-    else
-        guest_dir=$(echo "$synced_folder" | sed -r "s/^ .* => (.*)$/\\1/")
+    if ! [ $at_golem_dir ]; then
+        synced_folder=$(grep -x "^ $current_dir => .*$" ./synced_folders)
+        if ! [ -n "$synced_folder" ];
+        then
+            guest_dir="/host/${current_dir//[\/:\\]/_}"
+            echo "syncing $current_dir as $guest_dir..."
+            echo " $current_dir => $guest_dir" >> ./synced_folders
+            # reload to make vagrant created the new folder
+            vagrant reload
+        else
+            guest_dir=$(echo "$synced_folder" | sed -r "s/^ .* => (.*)$/\\1/")
+        fi
     fi
 
-    vagrant ssh -c "cd $guest_dir && $*"
+    if ! [ -n "$*" ];
+    then
+        export LC_INITIALDIR=" $guest_dir"
+        vagrant ssh -- -o SendEnv=LC_INITIALDIR
+    else
+        vagrant ssh -c "cd $guest_dir && $*"
+    fi
     exit $?
 fi
 
