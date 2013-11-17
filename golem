@@ -89,13 +89,13 @@ then
     exit $?
 fi
 
-if [ "$command" == "do" ];
+if [ "$command" == "run" ];
 then
     vagrant ssh -c "cd /vagrant && $*"
     exit $?
 fi
 
-if [ "$command" == "here" ];
+if [ "$command" == "do" ];
 then
     guest_dir='/vagrant'
     synced_folder=$(grep -x "^ $current_dir => .*$" ./synced_folders)

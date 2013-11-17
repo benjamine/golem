@@ -17,7 +17,7 @@ capybara-*.html
 rerun.txt
 pickle-email-*.html
 chromedriver.log
-screenshot*.png
+screenshots
 .idea
 Hosts.txt
 /screenshots/
