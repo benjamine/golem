@@ -1,13 +1,13 @@
 {
   "name": "golem",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "automatically provisioned virtual machine for headless web automation ",
   "main": "index.js",
   "directories": {
     "example": "example"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "install": "make"
   },
   "repository": {
     "type": "git",
