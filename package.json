@@ -1,0 +1,30 @@
+{
+  "name": "golem",
+  "version": "0.0.0",
+  "description": "automatically provisioned virtual machine for headless web automation ",
+  "main": "index.js",
+  "directories": {
+    "example": "example"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/benjamine/golem.git"
+  },
+  "keywords": [
+    "golem",
+    "automation",
+    "vagrant",
+    "puppet",
+    "headless",
+    "test"
+  ],
+  "author": "Benjamin Eidelman",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/benjamine/golem/issues"
+  },
+  "homepage": "https://github.com/benjamine/golem"
+}
