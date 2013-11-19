@@ -4,8 +4,8 @@ command=$1
 shift
 current_dir=$(pwd)
 script_path="${BASH_SOURCE[0]}"
-script_dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-
+script_dir="${script_path:0:${#script_path}-5}"
+script_dir_pwd="$( cd "$script_dir" && pwd )"
 chmod +x "$script_path"
 
 if [ "$command" == "help" ] || [ "$command" == "" ];
@@ -27,30 +27,37 @@ commands are:
     exit
 fi
 
-cd "$script_dir"
+cd "$script_dir_pwd"
 
 if [ $(pwd) == $current_dir ]; then
     at_golem_dir=true
+    echo "golem dir!: $(pwd)"
 fi
 
 if [ "$command" == "where" ];
 then
-    echo "$script_dir/golem"
+    echo "$script_path"
     exit $?
 fi
 
 if [ "$command" == "global-alias" ];
 then
-    if ! [ -e "/usr/local/bin/golem" ];
+    if [ -d "/usr/local/bin" ];
     then
-        echo "$script_dir/golem \$*" > "/usr/local/bin/golem"
-        chmod +x "/usr/local/bin/golem"
-        if [ $? == 0 ];
+        if ! [ -e "/usr/local/bin/golem" ];
         then
-            echo "'golem' global alias created"
+            echo "$script_dir/golem \$*" > "/usr/local/bin/golem"
+            chmod +x "/usr/local/bin/golem"
+            if [ $? == 0 ];
+            then
+                echo "'golem' global alias created"
+            fi
+        else
+            echo "'golem' global alias already exists"
         fi
     else
-        echo "'golem' global alias already exists"
+        # this is probably windows
+        echo "unable to set global alias on current system"
     fi
     exit $?
 fi
