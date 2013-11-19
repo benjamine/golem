@@ -147,11 +147,6 @@ then
         vagrant ssh -c "cd $guest_dir && $*"
     fi
 
-    if ! [ $? == 0 ];
-    then
-        
-    fi
-
     exit $?
 fi
 
