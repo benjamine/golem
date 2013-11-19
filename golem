@@ -31,7 +31,6 @@ cd "$script_dir_pwd"
 
 if [ $(pwd) == $current_dir ]; then
     at_golem_dir=true
-    echo "golem dir!: $(pwd)"
 fi
 
 if [ "$command" == "where" ];
