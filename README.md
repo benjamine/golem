@@ -22,7 +22,7 @@ Usage
 # Summon your Golem!
 git clone https://github.com/benjamine/golem.git
 cd golem
-golem up
+make
 
 # this will take some time! (first time it will download an ubuntu image and provision it with all the required software)
 
@@ -33,7 +33,8 @@ cd example
 
 # golem will run the command (after "do" word) in the vm
 # first time you run "golem do" on a directory, a synced folder is created to mirror cwd on guest vm, then commands are executed in that guest folder
-golem do sudo bundle install && cucumber
+golem do sudo bundle install
+golem do cucumber
 
 # now using chrome
 golem do BROWSER=chrome cucumber

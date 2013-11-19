@@ -8,9 +8,15 @@ file { '/etc/motd':
     content => template('/vagrant/resources/banner.erb')
 }
 
+file { '/vagrant/scripts/chrome-driver.sh':
+    ensure => present,
+    mode => '0755'
+}
+
 exec { 'chrome-driver':
     command => "/vagrant/scripts/chrome-driver.sh",
     logoutput => on_failure,
+    require => File['/vagrant/scripts/chrome-driver.sh']
 }
 
 package { 'google-chrome-stable':

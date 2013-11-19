@@ -3,6 +3,10 @@
 command=$1
 shift
 current_dir=$(pwd)
+script_path="${BASH_SOURCE[0]}"
+script_dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
+chmod +x "$script_path"
 
 if [ "$command" == "help" ] || [ "$command" == "" ];
 then
@@ -23,16 +27,31 @@ commands are:
     exit
 fi
 
-script_dir=$(echo ${BASH_SOURCE[0]} | sed -r "s/^(.*)[\\/]golem$/\\1/")
-
 cd "$script_dir"
+
 if [ $(pwd) == $current_dir ]; then
     at_golem_dir=true
 fi
 
 if [ "$command" == "where" ];
 then
-    echo "$script_dir"
+    echo "$script_dir/golem"
+    exit $?
+fi
+
+if [ "$command" == "global-alias" ];
+then
+    if ! [ -e "/usr/local/bin/golem" ];
+    then
+        echo "$script_dir/golem \$*" > "/usr/local/bin/golem"
+        chmod +x "/usr/local/bin/golem"
+        if [ $? == 0 ];
+        then
+            echo "'golem' global alias created"
+        fi
+    else
+        echo "'golem' global alias already exists"
+    fi
     exit $?
 fi
 
@@ -116,7 +135,7 @@ then
             # reload to make vagrant created the new folder
             vagrant reload
         else
-            guest_dir=$(echo "$synced_folder" | sed -r "s/^ .* => (.*)$/\\1/")
+            guest_dir=$(echo "$synced_folder" | sed -E "s/^ .* => (.*)$/\\1/")
         fi
     fi
 
@@ -127,6 +146,12 @@ then
     else
         vagrant ssh -c "cd $guest_dir && $*"
     fi
+
+    if ! [ $? == 0 ];
+    then
+        
+    fi
+
     exit $?
 fi
 
