@@ -13,17 +13,19 @@ then
     echo "usage: golem <command> [<args>]
 
 commands are:
-    do      exec command on vm (synced folder to cwd)
-    run     exec command on vm in golem root folder
-    up      raise the golem
-    halt    halt the golem
-    suspend suspend the golem
-    reload  reload the golem
-    destroy destroy the golem
-    clean   clear all synced folders
-    status  display golem status
-    ssh     ssh into golem machine
-    where   display golem location"
+    do            exec command on vm (synced folder to cwd)
+    run           exec command on vm in golem root folder
+    summon        wake the golem
+    halt          halt the golem
+    suspend       suspend the golem
+    reload        reload the golem
+    destroy       destroy the golem
+    clean         clear all synced folders
+    status        display golem status
+    ssh           ssh into golem machine
+    global-alias  create global 'golem' alias
+    where         display golem location
+"
     exit
 fi
 
@@ -41,22 +43,24 @@ fi
 
 if [ "$command" == "global-alias" ];
 then
-    if [ -d "/usr/local/bin" ];
+    
+    bin_dir="/usr/local/bin"
+    if [ -d "$bin_dir" ];
     then
-        if ! [ -e "/usr/local/bin/golem" ];
+        echo "$script_dir/golem \$*" > "$bin_dir/golem"
+        chmod +x "$bin_dir/golem"
+        if [ $? == 0 ];
         then
-            echo "$script_dir/golem \$*" > "/usr/local/bin/golem"
-            chmod +x "/usr/local/bin/golem"
-            if [ $? == 0 ];
-            then
-                echo "'golem' global alias created"
-            fi
-        else
-            echo "'golem' global alias already exists"
+            echo "'golem' global alias created"
         fi
     else
-        # this is probably windows
-        echo "unable to set global alias on current system"
+        if [ -d "c:\\windows" ];
+        then
+            # yes this is nasty, so is windows CLI
+            sh ./utils/windows-elevate.sh "echo \"\"@$script_path %*\"\" > \"\"${SYSTEMROOT}\golem.cmd\"\""
+        else
+            echo "WARNING: unable to set global alias on current system"
+        fi
     fi
     exit $?
 fi
