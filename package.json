@@ -1,11 +1,8 @@
 {
   "name": "golem",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "automatically provisioned virtual machine for headless web automation ",
   "main": "index.js",
-  "directories": {
-    "example": "example"
-  },
   "scripts": {
     "install": "make"
   },

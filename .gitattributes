@@ -13,6 +13,7 @@ Vagrantfile eol=lf
 *.rb eol=lf
 *.erb eol=lf
 *.pp eol=lf
+*.yml eol=lf
 Rakefile eol=lf
 Modulefile eol=lf
 Gemfile eol=lf

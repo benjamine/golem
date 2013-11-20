@@ -1,4 +1,3 @@
 base_url: http://www.github.com/
-default_page_wait: 180
-default_element_wait: 120
-browser: firefox
+default_wait_time: 5
+browser: <%= ENV['BROWSER'] || 'firefox' %>

@@ -4,6 +4,7 @@ synced_folders
 *.sassc
 .sass-cache
 capybara-*.html
+*report*.html
 .rspec
 /.bundle
 /vendor/bundle

@@ -1,5 +1,5 @@
 require 'headless'
-require_relative 'helper/file_utils'
+require 'fileutils'
 
 Before do
   if ENV['HEADLESS'] == 'true'
@@ -25,7 +25,7 @@ end
 
 def save_page_screenshot(name)
   screenshot_dir = "screenshots/"
-  File_Utils.mkdir screenshot_dir unless File.directory? screenshot_dir
+  FileUtils.mkdir_p screenshot_dir unless File.directory? screenshot_dir
   filename = "#{screenshot_dir}/#{name}.png"
   save_screenshot(filename)
   # embed in cucumber HTML report

@@ -1,4 +1,5 @@
 require 'yaml'
+require 'erb'
 
 class Configuration
 
@@ -15,7 +16,10 @@ class Configuration
 
   # load and merge configuration file(s) in order
   #
-  # yml files are search on Configuration.base_folder
+  # Notes:
+  # - yml files are search on Configuration.base_folder
+  # - files are preprocessed with ERB
+  #
   # args: names is a "+" separated list of config names, if a name has "-" each level is loaded
   # eg: "a+b-c-d+e/f" will load: "a.yml", "b.yml", "b-c.yml", "b-c-d.yml", and "e/f.yml"
   def self.load names
@@ -25,7 +29,9 @@ class Configuration
       filename = parts[0]
       parts.each do |part|
         fullpath = @@base_folder + filename + '.yml'
-        self.merge(YAML.load_file(fullpath))
+        if File.file? fullpath 
+          self.merge(YAML.load(ERB.new(File.read(fullpath)).result))
+        end
         filename += "-" + part
       end
     end

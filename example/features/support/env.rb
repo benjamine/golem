@@ -2,7 +2,7 @@ require 'capybara/cucumber'
 require 'selenium-webdriver'
 
 # load configuration
-require File.dirname(__FILE__) + '/lib/configuration';
+require File.dirname(__FILE__) + '/helpers/configuration';
 Configuration.base_folder = File.dirname(__FILE__) + "/../../config/"
 Configuration.load('common')
 Configuration.load('env/' + ENV['ENVIRONMENT']) if ENV['ENVIRONMENT']
@@ -18,7 +18,7 @@ Capybara.configure do |config|
   config.javascript_driver = browser_symbol
   config.run_server = false
   config.default_selector = :css
-  config.default_wait_time = 30
+  config.default_wait_time = Configuration.default_wait_time
 end
 
 Capybara.register_driver :chrome do |app|
