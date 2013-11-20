@@ -47,7 +47,7 @@ then
     bin_dir="/usr/local/bin"
     if [ -d "$bin_dir" ];
     then
-        echo "$script_dir/golem \$*" > "$bin_dir/golem"
+        echo "$script_dir_pwd/golem \$*" > "$bin_dir/golem"
         chmod +x "$bin_dir/golem"
         if [ $? == 0 ];
         then
