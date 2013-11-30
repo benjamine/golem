@@ -1,5 +1,6 @@
 require 'capybara/cucumber'
 require 'selenium-webdriver'
+require 'rspec/expectations'
 
 # load configuration
 require File.dirname(__FILE__) + '/helpers/configuration';
@@ -30,5 +31,9 @@ Capybara.register_driver :firefox do |app|
   profile.assume_untrusted_certificate_issuer = false
   profile.native_events = false
   Capybara::Selenium::Driver.new(app, :profile => profile)
+end
+
+Capybara.register_driver :safari do |app|
+  Capybara::Selenium::Driver.new(app, :browser => :safari)
 end
 
