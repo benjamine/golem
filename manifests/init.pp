@@ -8,6 +8,21 @@ file { '/etc/motd':
     content => template('/vagrant/resources/banner.erb')
 }
 
+package { 'dos2unix':
+    ensure => 'installed'
+}
+
+file { '/vagrant/scripts/docker.sh':
+    ensure => present,
+    mode => '0755'
+}
+
+exec { 'docker':
+    command => "/vagrant/scripts/docker.sh",
+    logoutput => on_failure,
+    require => File['/vagrant/scripts/docker.sh']
+}
+
 file { '/vagrant/scripts/chrome-driver.sh':
     ensure => present,
     mode => '0755'
@@ -32,37 +47,62 @@ package { 'xvfb':
     ensure   => 'installed'
 }
 
-class { 'ruby':
-    ruby_package => 'ruby1.9.1-full',
-    gems_version => 'latest'
+
+
+package { 'qt4-qmake':
+    ensure   => 'installed'
+}
+
+package { 'libqt4-dev':
+    ensure   => 'installed'
+}
+
+#package { 'libicu48':
+#    ensure   => 'installed'
+#}
+
+
+
+# sudo apt-add-repository ppa:ubuntu-sd k-team/ppa
+
+package { 'qtdeclarative5-dev':
+    ensure   => 'installed'
+}
+
+#package { 'qt5-make':
+#    ensure   => 'installed'
+#}
+
+package { 'qt5-default':
+    ensure   => 'installed'
+}
+
+package { 'libqt5webkit5-dev':
+    ensure   => 'installed'
+}
+
+package { 'libsqlite3-dev':
+    ensure   => 'installed'
+}
+
+
+
+package { 'ruby':
+    name   => 'ruby1.9.1-full',
 }
 
 define check_alternatives($linkto) {
-  exec { "/usr/sbin/update-alternatives --set $name $linkto":
+  exec { "/usr/bin/update-alternatives --set $name $linkto":
     unless => "/bin/sh -c '[ -L /etc/alternatives/$name ] && [ /etc/alternatives/$name -ef $linkto ]'"
   }
-}
-
-# We want to use ruby 1.9.3 (1.9.1 in ubuntu)
-check_alternatives { "ruby":
-  linkto => "/usr/bin/ruby1.9.1",
-  require => Class[ruby];
-}
-
-# We want to use gem 1.9.1
-check_alternatives { "gem":
-  linkto => "/usr/bin/gem1.9.1",
-  require => Class[ruby],
 }
 
 package { 'bundler':
     ensure   => 'installed',
     provider => 'gem',
-    require => Check_alternatives[gem],
 }
 
 package { 'rake':
     ensure   => 'installed',
     provider => 'gem',
-    require => Check_alternatives[gem],
 }

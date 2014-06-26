@@ -64,6 +64,7 @@ class Configuration
 end
 
 def merge_hashes_recursive(hash, hash2)
+  return if not hash2.respond_to?(:each_pair)
   hash2.each_pair do |k,v2|
     v = hash[k]
     if v.is_a?(Hash)

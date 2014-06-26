@@ -27,8 +27,8 @@ else
   # download and copy chromeDriver to /usr/local/bin
   cd /tmp
 
-  wget -nv "http://chromedriver.storage.googleapis.com/2.6/chromedriver_linux32.zip"
-  unzip chromedriver_linux32.zip
+  wget -nv "http://chromedriver.storage.googleapis.com/2.9/chromedriver_linux64.zip"
+  unzip chromedriver_linux64.zip
   mv chromedriver /usr/local/bin
   chmod a+rx /usr/local/bin/chromedriver
 
