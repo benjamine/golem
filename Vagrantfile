@@ -29,6 +29,14 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # using a specific IP.
   # config.vm.network :private_network, ip: "192.168.33.10"
 
+  # load forwarded ports file
+  if (File.exists? './forwarded_ports')
+    File.open('./forwarded_ports').each do |line|
+      guest_port, host_port = line.match(/^ (.*) => (.*)$/).captures
+      config.vm.network :forwarded_port, guest: guest_port, host: host_port
+    end
+  end
+
   # Create a public network, which generally matched to bridged network.
   # Bridged networks make the machine appear as another physical device on
   # your network.

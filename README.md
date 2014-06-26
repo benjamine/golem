@@ -5,7 +5,8 @@ automatically provisioned virtual machine for headless web automation.
 
 - ready for headless web automation using real Firefox and Chrome (using [Xfvb](http://en.wikipedia.org/wiki/Xvfb))
 - provisioned with ruby stack (ruby, gem, bundler, cucumber, rake)
-- powered by [Vagrant](http://www.vagrantup.com/), [Puppet](https://puppetlabs.com/), [VirtualBox](http://www.virtualbox.org/) and [Ubuntu](http://www.ubuntu.com/) 12.
+- powered by [Vagrant](http://www.vagrantup.com/), [Puppet](https://puppetlabs.com/), [VirtualBox](http://www.virtualbox.org/) and [Ubuntu](http://www.ubuntu.com/) 14.04 LTS
+- includes [docker](http://www.docker.com/)
 
 Requirements
 --------
@@ -41,5 +42,8 @@ golem do BROWSER=chrome cucumber
 
 # or open an ssh session in the synced folder
 golem do
+
+# port forwarding (expose port 80 in the VM as 8080 in your host machine)
+golem expose 80 8080
 
 ```

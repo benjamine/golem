@@ -20,6 +20,7 @@ commands are:
     suspend       suspend the golem
     reload        reload the golem
     destroy       destroy the golem
+    expose        forward ports from vm to host (parameters: vmport localport)
     clean         clear all synced folders
     status        display golem status
     ssh           ssh into golem machine
@@ -107,6 +108,9 @@ then
         echo "removing all synced folders"
         echo "(they get created automatically when using 'golem do')"
         rm ./synced_folders
+        echo "removing all forwarded ports"
+        echo "(they get created automatically when using 'golem expose')"
+        rm ./forwarded_ports
         vagrant reload
     else
         echo "no synced folders found, done."
@@ -130,6 +134,39 @@ if [ "$command" == "run" ];
 then
     vagrant ssh -c "cd /vagrant && $*"
     exit $?
+fi
+
+if [ "$command" == "expose" ];
+then
+  vmport="$1"
+  localport="$2"
+
+  # remove duplicates
+  if [ -e ./forwarded_ports ]; then
+    if grep -q "$vmport => $localport" ./forwarded_ports; then
+      echo "port forward already existing"
+      exit $?
+    fi
+
+    if grep -q "$vmport =>" ./forwarded_ports; then
+      echo 'removing existing forward'
+      cat ./forwarded_ports | grep "$vmport =>"
+      cat ./forwarded_ports | grep -v "$vmport =>" > ./forwarded_ports.tmp
+      mv ./forwarded_ports.tmp ./forwarded_ports
+    fi
+    if grep -q " => $localport" ./forwarded_ports; then
+      echo 'removing existing forward'
+      cat ./forwarded_ports | grep " => $localport"
+      cat ./forwarded_ports | grep -v " => $localport" > ./forwarded_ports.tmp
+      mv ./forwarded_ports.tmp ./forwarded_ports
+    fi
+  fi
+
+  echo "exposing golem http port $vmport to local $localport"
+  echo " $vmport => $localport" >> ./forwarded_ports
+
+  echo "reload to apply changes"
+  exit $?
 fi
 
 if [ "$command" == "do" ];
