@@ -19,7 +19,7 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
   echo brew update…
   brew update
 
-  if [ ! -d /opt/homebrew-cask/ ]; then
+  if [ ! -d /usr/local/Cellar/brew-cask/ ]; then
     # set homebrew cask options
     export HOMEBREW_CASK_OPTS="--appdir=/Applications"
     brew tap caskroom/cask
