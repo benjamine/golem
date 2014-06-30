@@ -8,6 +8,14 @@ automatically provisioned virtual machine for headless web automation.
 - powered by [Vagrant](http://www.vagrantup.com/), [Puppet](https://puppetlabs.com/), [VirtualBox](http://www.virtualbox.org/) and [Ubuntu](http://www.ubuntu.com/) 14.04 LTS
 - includes [docker](http://www.docker.com/)
 
+Curl-install
+--------
+
+``` sh
+curl -s http://benjamine.github.io/golem/curl-install/install.sh | sh
+```
+This will clone you a golem (on ```~/golem```) and take care of all requirements.
+
 Requirements
 --------
 
