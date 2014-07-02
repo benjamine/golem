@@ -44,7 +44,7 @@ fi
 
 if [ "$command" == "global-alias" ];
 then
-    
+
     bin_dir="/usr/local/bin"
     if [ -d "$bin_dir" ];
     then
@@ -188,7 +188,7 @@ then
 
     if ! [ -n "$*" ];
     then
-        export LC_INITIALDIR=" $guest_dir"
+        export LC_INITIALDIR="$guest_dir"
         vagrant ssh -- -o SendEnv=LC_INITIALDIR
     else
         vagrant ssh -c "cd $guest_dir && $*"
