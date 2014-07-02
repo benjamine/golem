@@ -36,6 +36,12 @@ then
 fi
 
 if [ -f /home/vagrant/.zshrc ]; then
+  if ! grep -q "golem $PROMPT" /home/vagrant/.zshrc
+  then
+    echo 'setting golem prompt at .zshrc'
+    echo '# identify as golem in prompt' >> .zshrc
+    echo 'export PROMPT="golem $PROMPT' >> .zshrc
+  fi
   if ! grep -q LC_INITIALDIR /home/vagrant/.zshrc
   then
     echo 'setting cd initial dir at .zshrc'
