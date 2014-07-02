@@ -35,10 +35,12 @@ then
     echo 'if [ -n $INITIALDIR ]; then cd $INITIALDIR;fi' >> .bashrc
 fi
 
-if [ -f /home/vagrant/.zshrc ] && [ ! grep -q LC_INITIALDIR /home/vagrant/.zshrc ]
-then
+if [ -f /home/vagrant/.zshrc ]; then
+  if ! grep -q LC_INITIALDIR /home/vagrant/.zshrc
+  then
     echo 'setting cd initial dir at .zshrc'
     echo '# Take ssh initial dir from client var' >> .zshrc
     echo 'export INITIALDIR=$LC_INITIALDIR' >> .zshrc
     echo 'if [ -n $INITIALDIR ]; then cd $INITIALDIR;fi' >> .zshrc
+  fi
 fi
