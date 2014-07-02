@@ -17,7 +17,7 @@ file { '/vagrant/scripts/zsh.sh':
     mode => '0755'
 }
 
-exec { 'docker':
+exec { 'zsh':
     command => "/vagrant/scripts/zsh.sh",
     logoutput => on_failure,
     require => File['/vagrant/scripts/zsh.sh']

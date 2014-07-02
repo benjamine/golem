@@ -44,7 +44,7 @@ fi
 
 if [ "$command" == "global-alias" ];
 then
-    
+
     bin_dir="/usr/local/bin"
     if [ -d "$bin_dir" ];
     then
