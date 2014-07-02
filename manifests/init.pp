@@ -12,6 +12,17 @@ package { 'dos2unix':
     ensure => 'installed'
 }
 
+file { '/vagrant/scripts/zsh.sh':
+    ensure => present,
+    mode => '0755'
+}
+
+exec { 'docker':
+    command => "/vagrant/scripts/zsh.sh",
+    logoutput => on_failure,
+    require => File['/vagrant/scripts/zsh.sh']
+}
+
 file { '/vagrant/scripts/docker.sh':
     ensure => present,
     mode => '0755'

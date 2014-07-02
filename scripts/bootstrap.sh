@@ -16,15 +16,15 @@ if $aptgetupdate; then
     date +%Y-%m-%d > /var/cache/apt.lastday
 fi
 
-if ! grep -q HEADLESS /etc/environment 
+if ! grep -q HEADLESS /etc/environment
 then
     echo 'setting HEADLESS="true"'
-    echo 'HEADLESS="true"' >> /etc/environment    
+    echo 'HEADLESS="true"' >> /etc/environment
 fi
-if ! grep -q GOLEM /etc/environment 
+if ! grep -q GOLEM /etc/environment
 then
     echo 'setting GOLEM="true"'
-    echo 'GOLEM="true"' >> /etc/environment    
+    echo 'GOLEM="true"' >> /etc/environment
 fi
 
 if ! grep -q LC_INITIALDIR /home/vagrant/.bashrc
@@ -33,4 +33,12 @@ then
     echo '# Take ssh initial dir from client var' >> .bashrc
     echo 'export INITIALDIR=$LC_INITIALDIR' >> .bashrc
     echo 'if [ -n $INITIALDIR ]; then cd $INITIALDIR;fi' >> .bashrc
+fi
+
+if [ -f /home/vagrant/.zshrc ] && [ ! grep -q LC_INITIALDIR /home/vagrant/.zshrc ]
+then
+    echo 'setting cd initial dir at .zshrc'
+    echo '# Take ssh initial dir from client var' >> .zshrc
+    echo 'export INITIALDIR=$LC_INITIALDIR' >> .zshrc
+    echo 'if [ -n $INITIALDIR ]; then cd $INITIALDIR;fi' >> .zshrc
 fi
