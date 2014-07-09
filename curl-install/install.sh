@@ -41,11 +41,11 @@ else
     echo    http://git-scm.com/downloads
     exit 1
   fi
-  if ! which VBoxManage >/dev/null; then
-    echo VirtualBox not found, please install it first:
-    echo    https://www.virtualbox.org
-    exit 1
-  fi
+  #if ! which VBoxManage >/dev/null; then
+  #  echo VirtualBox not found, please install it first:
+  #  echo    https://www.virtualbox.org
+  #  exit 1
+  #fi
   if ! which vagrant >/dev/null; then
     echo vagrant not found, please install it first:
     echo    http://www.vagrantup.com/
