@@ -12,14 +12,14 @@ echo zsh installed
 if [ ! -d ~/.oh-my-zsh/ ]; then
   echo 'installing oh my zsh'
   curl -L http://install.ohmyz.sh | sudo sh
-
-  if ! grep -q LC_INITIALDIR /home/vagrant/.zshrc
-  then
-      echo 'setting cd initial dir at .zshrc'
-      echo '# Take ssh initial dir from client var' >> .zshrc
-      echo 'export INITIALDIR=$LC_INITIALDIR' >> .zshrc
-      echo 'if [ -n $INITIALDIR ]; then cd "${INITIALDIR#* }";fi' >> .zshrc
-  fi
-
 fi
+
+if ! grep -q LC_INITIALDIR /home/vagrant/.zshrc
+then
+    echo 'setting cd initial dir at .zshrc'
+    echo '# Take ssh initial dir from client var' >> /home/vagrant/.zshrc
+    echo 'export INITIALDIR=$LC_INITIALDIR' >> /home/vagrant/.zshrc
+    echo 'if [ -n $INITIALDIR ]; then cd "${INITIALDIR#* }";fi' >> /home/vagrant/.zshrc
+fi
+
 echo oh-my-zsh installed
