@@ -19,6 +19,7 @@ file { '/vagrant/scripts/zsh.sh':
 
 exec { 'zsh':
     command => "/vagrant/scripts/zsh.sh",
+    user => "vagrant",
     logoutput => on_failure,
     require => File['/vagrant/scripts/zsh.sh']
 }

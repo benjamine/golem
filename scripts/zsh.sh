@@ -9,10 +9,11 @@ fi
 echo zsh installed
 
 # setting up oh my zsh
-if [ ! -d ~/.oh-my-zsh/ ]; then
-  echo 'installing oh my zsh'
-  curl -L http://install.ohmyz.sh | sudo sh
-fi
+#if [ ! -d ~/.oh-my-zsh/ ]; then
+#  echo 'installing oh my zsh'
+#  curl -L http://install.ohmyz.sh | sudo sh
+#fi
+#echo oh-my-zsh installed
 
 if ! grep -q LC_INITIALDIR /home/vagrant/.zshrc
 then
@@ -21,5 +22,3 @@ then
     echo 'export INITIALDIR=$LC_INITIALDIR' >> /home/vagrant/.zshrc
     echo 'if [ -n $INITIALDIR ]; then cd "${INITIALDIR#* }";fi' >> /home/vagrant/.zshrc
 fi
-
-echo oh-my-zsh installed
