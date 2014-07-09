@@ -4,13 +4,13 @@ set -e
 
 if ! which zsh >/dev/null; then
   echo installing zsh…
-  apt-get install zsh
+  apt-get --yes install zsh
 fi
 echo zsh installed
 
 # setting up oh my zsh
-if ! -d ~/.oh-my-sh; then
-
+if [ ! -d ~/.oh-my-zsh/ ]; then
+  echo 'installing oh my zsh'
   curl -L http://install.ohmyz.sh | sudo sh
 
   if ! grep -q LC_INITIALDIR /home/vagrant/.zshrc
