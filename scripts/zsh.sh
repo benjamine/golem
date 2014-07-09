@@ -4,7 +4,7 @@ set -e
 
 if ! which zsh >/dev/null; then
   echo installing zsh…
-  apt-get --yes install zsh
+  sudo apt-get --yes install zsh
 fi
 echo zsh installed
 
