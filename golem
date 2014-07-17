@@ -19,6 +19,7 @@ commands are:
     halt          halt the golem
     suspend       suspend the golem
     reload        reload the golem
+    provision     re-provision the golem (vagrant provision)
     destroy       destroy the golem
     expose        forward ports from vm to host (parameters: vmport localport)
     clean         clear all synced folders
@@ -74,6 +75,12 @@ then
     then
         vagrant ssh -c "cat /vagrant/resources/banner.erb"
     fi
+    exit $?
+fi
+
+if [ "$command" == "provision" ];
+then
+    vagrant provision
     exit $?
 fi
 
