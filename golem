@@ -19,6 +19,7 @@ commands are:
     halt          halt the golem
     suspend       suspend the golem
     reload        reload the golem
+    update        download golem updates (reloads if necessary)
     provision     re-provision the golem (vagrant provision)
     destroy       destroy the golem
     expose        forward ports from vm to host (parameters: vmport localport)
@@ -98,7 +99,25 @@ fi
 
 if [ "$command" == "reload" ];
 then
-    vagrant reload
+    vagrant reload --provision
+    exit $?
+fi
+
+if [ "$command" == "update" ];
+then
+    set -e
+    git fetch origin
+    if git diff --quiet HEAD..origin/master
+    then
+      echo 'golem is up-to-date'
+      exit
+    fi
+    echo "updating..."
+    git merge origin/master
+    touch lastupdate.tmp
+    echo "reloading to apply changes"
+    vagrant reload --provision
+    echo "golem updated successfully"
     exit $?
 fi
 
@@ -176,7 +195,20 @@ then
   exit $?
 fi
 
+docommand=false
+vmcommand=""
+if [ "$command" == "docker" ];
+then
+  docommand=true
+  vmcommand="sudo docker $*"
+fi
 if [ "$command" == "do" ];
+then
+  docommand=true
+  vmcommand="$*"
+fi
+
+if [ $docommand ];
 then
     guest_dir='/vagrant'
     if ! [ $at_golem_dir ]; then
@@ -193,12 +225,12 @@ then
         fi
     fi
 
-    if ! [ -n "$*" ];
+    if ! [ -n "$vmcommand" ];
     then
         export LC_INITIALDIR=" $guest_dir"
         vagrant ssh -- -o SendEnv=LC_INITIALDIR
     else
-        vagrant ssh -c "cd $guest_dir && $*"
+        vagrant ssh -c "cd $guest_dir && $vmcommand"
     fi
 
     exit $?
