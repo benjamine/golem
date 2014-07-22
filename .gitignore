@@ -24,6 +24,10 @@ screenshots
 Hosts.txt
 /screenshots/
 
+node_modules
+
 # Vagrant folders #
 ###################
 .vagrant
+
+.golem

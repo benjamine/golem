@@ -1,9 +1,0 @@
-source 'http://rubygems.org'
-
-ruby '1.9.3'
-gem 'cucumber'
-gem 'rspec'
-gem 'headless'
-gem 'capybara'
-gem 'selenium-webdriver'
-gem 'rspec'

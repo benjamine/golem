@@ -1,10 +1,12 @@
 {
   "name": "golem",
-  "version": "0.0.7",
-  "description": "automatically provisioned virtual machine for docker and headless web automation",
+  "version": "0.1.0",
+  "description": "automatically provisioned virtual machines for docker and headless automation",
   "main": "index.js",
   "scripts": {
-    "install": "make"
+  },
+  "bin": {
+    "golem": "./bin/golem.js"
   },
   "repository": {
     "type": "git",
@@ -14,13 +16,17 @@
     "docker",
     "automation",
     "vagrant",
-    "headless",
-    "test"
+    "headless"
   ],
   "author": "Benjamin Eidelman",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/benjamine/golem/issues"
   },
-  "homepage": "https://github.com/benjamine/golem"
+  "homepage": "https://github.com/benjamine/golem",
+  "dependencies": {
+    "chalk": "^0.5.1",
+    "commander": "^2.3.0",
+    "shelljs": "^0.3.0"
+  }
 }

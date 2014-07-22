@@ -6,18 +6,7 @@
 # The above will handle all files NOT found below
 #
 # These files are text and should be normalized (Convert crlf => lf)
-Vagrantfile eol=lf
 .gitattributes eol=lf
 .gitignore eol=lf
-*.sh eol=lf
-*.rb eol=lf
-*.erb eol=lf
-*.pp eol=lf
-*.yml eol=lf
-Rakefile eol=lf
-Modulefile eol=lf
-Gemfile eol=lf
-golem eol=lf
-synced_folders eol=lf
 *.json eol=lf
 *.js eol=lf

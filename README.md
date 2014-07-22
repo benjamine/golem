@@ -8,16 +8,6 @@ automatically provisioned virtual machine to run docker containers and headless 
 - provisioned with ruby stack (ruby, gem, bundler, cucumber, rake)
 - powered by [Vagrant](http://www.vagrantup.com/), [Puppet](https://puppetlabs.com/), [VirtualBox](http://www.virtualbox.org/) and [Ubuntu](http://www.ubuntu.com/) 14.04 LTS
 
-Curl Install
---------
-
-``` sh
-curl -s http://benjamine.github.io/golem/curl-install/install.sh | sh
-```
-This will clone you a golem (on ```~/golem```) and take care of all requirements.
-
-***Note***: this requires ```curl``` and ```sh```. On windows the easiest way to get that is to install [git for windows](http://msysgit.github.io/) and check the "Unix tools on PATH" option during installation.
-
 Requirements
 --------
 
@@ -25,15 +15,25 @@ Requirements
 - [vagrant](http://www.vagrantup.com/)
 - [virtualbox](http://www.virtualbox.org/)
 
-Manual Install
+Note: ```golem init``` will check these requirements for you (and on OSX it will try to install them using `brew` and `brew cask`).
+
+Install
 -----
 
 ``` sh
-git clone https://github.com/benjamine/golem.git
-cd golem
-make
-# this will take some time! (first time it will download an ubuntu image
-# and provision it with all the required software)
+npm i -g golem
+```
+
+Now you can create a global golem for your user:
+
+``` sh
+golem init --global
+```
+
+or create one for the current folder (```./.golem```):
+
+``` sh
+golem init
 ```
 
 Updates
@@ -54,8 +54,8 @@ Once golem is ready, you can start running commands on your golem machine
 # Summon your Golem! (in case the vm is down)
 golem summon
 
-golem do echo \$OSTYPE
-# prints "linux-gnu" (the Ubuntu running in the VM)
+golem do pwd
+# prints the synced guest folder (created on the VM)
 
 # golem will run the command (after "do" word) in the vm
 # first time you run "golem do" on a directory, a synced folder is created to
@@ -68,6 +68,14 @@ or you can just open an ssh session starting a the synced folder with:
 golem do
 ```
 
+To recreate your golem from scratch, you can always:
+``` sh
+# remove the VM
+golem destroy
+# re-create (and re-provision)
+golem summon
+```
+
 ### Docker
 you can run docker commands with:
 ``` sh
@@ -78,17 +86,9 @@ golem docker run ubuntu echo "hi, from docker"
 In some cases you want to forward ports in the VM to your host machine (eg. from you docker containers)
 ```
 # expose port 80 in the VM as 8080 in your host machine
-golem expose 80 8080
-```
-### Browser automation
-You can try the included cucumber example:
-
-``` sh
-cd ~/golem/example
-
-golem do sudo bundle install
-golem do cucumber
-
-# now using chrome
-golem do BROWSER=chrome cucumber
+golem expose 80:8080,443:8443
+# list exposed ports
+golem expose list
+# remove all exposed ports
+golem expose clear
 ```
