@@ -7,7 +7,7 @@ var baseRepoUrl = 'base';
 
 exports.description = 'creates a golem vm in ./.golem';
 exports.options = {
-  repo: 'machine repository to clone from (default: benjamine/golem-base)',
+  "-r, --repo [url|name]": 'machine repository to clone from',
   global: 'save it globally (~/.golem)'
 };
 
