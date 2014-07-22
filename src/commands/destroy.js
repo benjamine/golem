@@ -1,6 +1,6 @@
 require('shelljs/global');
 
-exports.description = 'restarts the golem vm';
+exports.description = 'destroy the golem vm';
 
 exports.run = function() {
   cd(require('../locator').vm());

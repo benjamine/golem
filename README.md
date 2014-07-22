@@ -24,7 +24,7 @@ Install
 npm i -g golem
 ```
 
-Now you can create a global golem for your user:
+now you can create a global golem for your user:
 
 ``` sh
 golem init --global
@@ -48,10 +48,10 @@ golem update
 Usage
 -----
 
-Once golem is ready, you can start running commands on your golem machine
+Once a golem is ready, you can start running commands on the golem virtual machine
 
 ```
-# Summon your Golem! (in case the vm is down)
+# Summon your Golem! (spin up the vm)
 golem summon
 
 golem do pwd

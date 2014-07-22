@@ -13,7 +13,8 @@ function flagify(name) {
   return flag;
 }
 
-function load(program){
+function modules(){
+  var commands = {};
   var filenames = fs.readdirSync(path.join(__dirname, 'commands'));
   while (filenames.length) {
     var filename = filenames.shift();
@@ -22,6 +23,16 @@ function load(program){
     }
     var name = path.basename(filename, '.js');
     var module = require('./commands/' + name);
+    commands[name] = module;
+  }
+  return commands;
+}
+
+function load(program){
+  var commandModules = modules();
+  for (var name in commandModules) {
+    var module = commandModules[name];
+
     var cmd = program.command(name + (module.argument ?
       ' [' + module.argument + ']' : ''));
 
@@ -39,4 +50,5 @@ function load(program){
   }
 }
 
+exports.modules = modules;
 exports.load = load;
