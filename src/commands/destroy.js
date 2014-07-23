@@ -4,5 +4,5 @@ exports.description = 'destroy the golem vm';
 
 exports.run = function() {
   cd(require('../locator').vm());
-  exec('vagrant destroy');
+  exec('vagrant destroy --force');
 };

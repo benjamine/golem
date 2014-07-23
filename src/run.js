@@ -2,6 +2,25 @@ require('shelljs/global');
 var path = require('path');
 var child_process = require('child_process');
 
+function runSsh(command, attempt) {
+  var child = child_process.spawn('vagrant', [ 'ssh', '-c', command ], {
+    stdio: 'inherit'
+  });
+  child.on('close', function(code){
+    if (code !== 0 && (attempt || 1) < 2) {
+      // if the machine wasn't created yet
+      // summon and retry
+      if (!test('-f', './.vagrant/machines/default/virtualbox/id')) {
+        console.log('summoning golem to retry...');
+        exec('vagrant up');
+        runSsh(command, (attempt || 1) + 1);
+        return;
+      }
+    }
+    process.exit(code);
+  });
+}
+
 module.exports = function run(args) {
   var workingDir = path.resolve('.');
   cd(require('./locator').vm());
@@ -33,10 +52,5 @@ module.exports = function run(args) {
   }).join(' ') || 'zsh';
 
   var sshCommand = 'cd ' + guestDir + '; ' + guestCommand;
-  var child = child_process.spawn('vagrant', [ 'ssh', '-c', sshCommand ], {
-    stdio: 'inherit'
-  });
-  child.on('close', function(code){
-    process.exit(code);
-  });
+  runSsh(sshCommand);
 };
