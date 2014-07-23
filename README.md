@@ -1,12 +1,11 @@
 Golem
 =====
 
-automatically provisioned virtual machine to run docker containers and headless web automation.
+Run apps in automatically provisioned virtual machines or docker containers.
 
-- includes [docker](http://www.docker.com/) inside an Ubuntu VM
-- ready for headless web automation using real Firefox and Chrome (using [Xfvb](http://en.wikipedia.org/wiki/Xvfb))
-- provisioned with ruby stack (ruby, gem, bundler, cucumber, rake)
-- powered by [Vagrant](http://www.vagrantup.com/), [Puppet](https://puppetlabs.com/), [VirtualBox](http://www.virtualbox.org/) and [Ubuntu](http://www.ubuntu.com/) 14.04 LTS
+- includes [docker](http://www.docker.com/) (inside an Ubuntu VM)
+- powered by [Vagrant](http://www.vagrantup.com/), [VirtualBox](http://www.virtualbox.org/) and [Ubuntu](http://www.ubuntu.com/) 14.04 LTS
+- takes care of folder sync and port forwarding
 
 Requirements
 --------
@@ -19,19 +18,14 @@ Note: ```golem init``` will check these requirements for you (and on OSX it will
 
 Install
 -----
-
 ``` sh
 npm i -g golem
 ```
-
 now you can create a global golem for your user:
-
 ``` sh
 golem init --global
 ```
-
 or create one for the current folder (```./.golem```):
-
 ``` sh
 golem init
 ```
@@ -50,7 +44,7 @@ Usage
 
 Once a golem is ready, you can start running commands on the golem virtual machine
 
-```
+``` sh
 # Summon your Golem! (spin up the vm)
 golem summon
 
@@ -84,8 +78,8 @@ golem docker run ubuntu echo "hi, from docker"
 ```
 ### Port Forwarding
 In some cases you want to forward ports in the VM to your host machine (eg. from you docker containers)
-```
-# expose port 80 in the VM as 8080 in your host machine
+``` sh
+# expose port 80 in the VM as 8080 in your host machine, 443 as 8443
 golem expose 80:8080,443:8443
 # list exposed ports
 golem expose list
