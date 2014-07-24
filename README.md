@@ -76,6 +76,11 @@ you can run docker commands with:
 golem docker run ubuntu echo "hi, from docker"
 # note: "golem docker" is just a shortcut to "golem do sudo docker"
 ```
+if you like [fig](http://www.fig.sh/) a shortcut is provided to:
+``` sh
+golem fig
+```
+
 ### Port Forwarding
 In some cases you want to forward ports in the VM to your host machine (eg. from you docker containers)
 ``` sh
