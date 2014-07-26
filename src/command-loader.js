@@ -30,6 +30,7 @@ function modules(){
 
 function load(program){
   var commandModules = modules();
+  var noop = function(){};
   for (var name in commandModules) {
     var module = commandModules[name];
 
@@ -39,7 +40,10 @@ function load(program){
     if (module.description) {
       cmd = cmd.description(module.description);
     }
-
+    if (module.parseArgs === false) {
+      cmd.unknownOption = noop;
+      cmd.parseArgs = noop;
+    }
     if (module.options) {
       for (var optionName in module.options) {
         var flag = flagify(optionName);
