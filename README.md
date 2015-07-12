@@ -76,9 +76,9 @@ you can run docker commands with:
 golem docker run ubuntu echo "hi, from docker"
 # note: "golem docker" is just a shortcut to "golem do sudo docker"
 ```
-if you like [fig](http://www.fig.sh/) a shortcut is provided to:
+if you like [docker-compose](https://docs.docker.com/compose/) a shortcut is provided to:
 ``` sh
-golem fig
+golem docker-compose
 ```
 
 ### Port Forwarding

@@ -1,6 +1,6 @@
 {
   "name": "golem",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "description": "automatically provisioned virtual machines for docker and headless automation",
   "main": "src/index.js",
   "preferGlobal": true,
