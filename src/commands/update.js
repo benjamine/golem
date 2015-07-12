@@ -1,7 +1,7 @@
 require('shelljs/global');
 var chalk = require('chalk');
 
-exports.description = 'deletes golem vm in ./.golem';
+exports.description = 'autoupdate golem cli';
 
 exports.run = function() {
   if (!which('golem')) {
